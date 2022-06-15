@@ -37,8 +37,7 @@ public class OrderServiceImpl implements OrderService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity httpEntity = new HttpEntity(null, headers);
         List<ErrorDTO> errorDTOS = null;
-        ParameterizedTypeReference<BookDTO> typeRef = new ParameterizedTypeReference<BookDTO>() {
-        };
+        ParameterizedTypeReference<BookDTO> typeRef = new ParameterizedTypeReference<BookDTO>() {};
         OrderEntity orderEntity = new OrderEntity();
         StringBuilder sb = new StringBuilder();
         for (BookDTO bdto : orderDTO.getBooks()) {
@@ -67,8 +66,8 @@ public class OrderServiceImpl implements OrderService {
                 BookDTO book = new BookDTO();
                 book.setBookId(null);
                 HttpEntity httpEntity11 = new HttpEntity(book, headers);
-                ResponseEntity<String> respEntity1 = this.restTemplate.exchange(this.bookServiceUrl + "/bookqty/{bookId}", HttpMethod.PATCH, httpEntity11, typeRef11, bdto.getBookId());
-                System.out.println(respEntity1);
+               // ResponseEntity<String> respEntity1 = this.restTemplate.exchange(this.bookServiceUrl + "/bookqty/{bookId}", HttpMethod.PATCH, httpEntity11, typeRef11, bdto.getBookId());
+              //  System.out.println(respEntity1);
                 orderEntity.setBookIds(sb.toString());
                 orderEntity = orderRepository.save(orderEntity);
                 BeanUtils.copyProperties(orderEntity, orderDTO);
@@ -89,9 +88,10 @@ public class OrderServiceImpl implements OrderService {
         OrderDTO orderDTO = null;
 
         for (OrderEntity oe : orderEntities) {
-            List<BookDTO> dtoList = new ArrayList<>();
+
             String[] bookIds = oe.getBookIds().split(",");
             orderDTO = new OrderDTO();
+            List<BookDTO> dtoList=new ArrayList<>();
             for (String bookId : bookIds) {
                 // re = bookFeignClient.getBook(Long.parseLong(bookId));
 
